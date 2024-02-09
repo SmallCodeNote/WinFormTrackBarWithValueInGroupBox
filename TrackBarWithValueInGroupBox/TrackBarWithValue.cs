@@ -13,7 +13,7 @@ namespace TrackBarWithValueInGroupBox
         public GroupBox parentGroupBox;
         public TrackBar trackBar;
         public Label labelValue;
-        
+
         double valueFactor;
         public string labelFormat = "";
 
@@ -21,7 +21,7 @@ namespace TrackBarWithValueInGroupBox
         {
             this.parentGroupBox = parentGroupBox;
             this.valueFactor = valueFactor;
-            
+
 
             Initialize();
 
@@ -61,6 +61,28 @@ namespace TrackBarWithValueInGroupBox
         {
             get { return trackBar.Value * valueFactor; }
             set { trackBar.Value = (int)(value / valueFactor); }
+        }
+
+        public int Maximum
+        {
+            get { return trackBar.Maximum; }
+            set { trackBar.Maximum = (int)(value); }
+        }
+
+        public int Minimum
+        {
+            get { return trackBar.Minimum; }
+            set { trackBar.Minimum = (int)(value); }
+        }
+
+        public bool Enabled
+        {
+            get { return trackBar.Enabled; }
+            set {
+                trackBar.Enabled = value;
+                labelValue.Enabled = value;
+                parentGroupBox.Enabled = value;
+            }
         }
 
         public void Refresh()
