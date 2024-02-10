@@ -14,7 +14,7 @@ namespace TrackBarWithValueInGroupBox
         public TrackBar trackBar;
         public Label labelValue;
 
-        double valueFactor;
+        public double valueFactor;
         public string labelFormat = "";
 
         public TrackBarWithValue(GroupBox parentGroupBox, double valueFactor = 1.0)
@@ -74,11 +74,21 @@ namespace TrackBarWithValueInGroupBox
             get { return trackBar.Minimum; }
             set { trackBar.Minimum = (int)(value); }
         }
-
+        public int LargeChange
+        {
+            get { return trackBar.LargeChange; }
+            set { trackBar.LargeChange = (int)(value); }
+        }
+        public int TickFrequency
+        {
+            get { return trackBar.TickFrequency; }
+            set { trackBar.TickFrequency = (int)(value); }
+        }
         public bool Enabled
         {
             get { return trackBar.Enabled; }
-            set {
+            set
+            {
                 trackBar.Enabled = value;
                 labelValue.Enabled = value;
                 parentGroupBox.Enabled = value;
