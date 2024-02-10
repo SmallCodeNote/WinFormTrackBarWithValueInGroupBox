@@ -14,16 +14,16 @@ namespace TrackBarWithValueInGroupBox
         public TrackBar trackBar;
         public Label labelValue;
 
-        public double valueFactor;
+        public double _valueFactor=1.0;
         public string labelFormat = "";
 
         public TrackBarWithValue(GroupBox parentGroupBox, double valueFactor = 1.0)
         {
             this.parentGroupBox = parentGroupBox;
-            this.valueFactor = valueFactor;
-
-
+            
             Initialize();
+
+            this.valueFactor = valueFactor;
 
         }
 
@@ -57,6 +57,25 @@ namespace TrackBarWithValueInGroupBox
             labelValue.Text = (trackBar.Value * valueFactor).ToString(labelFormat);
         }
 
+        public double valueFactor
+        {
+            get { return _valueFactor; }
+            set
+            {
+                double maxValue = trackBar.Maximum / valueFactor;
+                double minValue = trackBar.Minimum / valueFactor;
+                double trackValue = trackBar.Value / valueFactor;
+
+                _valueFactor = value;
+
+                trackBar.Maximum = (int)(maxValue * valueFactor);
+                trackBar.Minimum = (int)(minValue * valueFactor);
+                trackBar.Value = (int)(trackValue * valueFactor);
+
+            }
+
+        }
+
         public double Value
         {
             get { return trackBar.Value * valueFactor; }
@@ -66,23 +85,38 @@ namespace TrackBarWithValueInGroupBox
         public int Maximum
         {
             get { return trackBar.Maximum; }
-            set { trackBar.Maximum = (int)(value); }
+            set
+            {
+                trackBar.Maximum = (int)(value/valueFactor);
+                int TickFrequency = (trackBar.Maximum - trackBar.Minimum) / 10;
+                if (TickFrequency < 1) TickFrequency = 1;
+                trackBar.TickFrequency = TickFrequency;
+            }
         }
 
         public int Minimum
         {
             get { return trackBar.Minimum; }
-            set { trackBar.Minimum = (int)(value); }
+            set
+            {
+                trackBar.Minimum = (int)(value / valueFactor);
+                int TickFrequency = (trackBar.Maximum - trackBar.Minimum) / 10;
+                if (TickFrequency < 1) TickFrequency = 1;
+                trackBar.TickFrequency = TickFrequency;
+            }
         }
         public int LargeChange
         {
             get { return trackBar.LargeChange; }
-            set { trackBar.LargeChange = (int)(value); }
+            set { trackBar.LargeChange = (int)(value / valueFactor); }
         }
         public int TickFrequency
         {
             get { return trackBar.TickFrequency; }
-            set { trackBar.TickFrequency = (int)(value); }
+            set
+            {
+                trackBar.TickFrequency = (int)(value / valueFactor);
+            }
         }
         public bool Enabled
         {
